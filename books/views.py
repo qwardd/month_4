@@ -10,7 +10,7 @@ def book_detail(request, id):
         context = {
             'book_id': book_id
         }
-        return render(request, template_name='book_detail.html', context=context)
+    return render(request, template_name='book_detail.html', context=context)
     
 
 
@@ -20,7 +20,7 @@ def book_list(request):
         context = {
             'book_list': book_list,
         }
-        return render(request, template_name='book.html', context=context)
+    return render(request, template_name='book.html', context=context)
 
 
 
