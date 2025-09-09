@@ -1,0 +1,14 @@
+<h2>Информация о туристе</h2>
+
+<p><strong>Имя:</strong> {{ tourist.name }}</p>
+<p><strong>Фамилия:</strong> {{ tourist.surname }}</p>
+
+<hr>
+
+<h2>Его тур</h2>
+{% if tourist.tourist %}
+  <p><strong>Дата тура:</strong> {{ tourist.tourist.date }}</p>
+  <p><strong>Создан:</strong> {{ tourist.tourist.created_at }}</p>
+{% else %}
+  <p>У этого туриста нет тура.</p>
+{% endif %}

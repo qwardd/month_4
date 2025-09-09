@@ -1,0 +1,13 @@
+<h1>Список туров</h1>
+
+<ol>
+  {% for tour in tour_list %}
+    <li>
+      <h3>{{ tour.tourist.name }} {{ tour.tourist.surname }}</h3>
+      <p>Дата тура: {{ tour.date }}</p>
+      <p>Создан: {{ tour.created_at }}</p>
+    </li>
+  {% empty %}
+    <li>Туры отсутствуют.</li>
+  {% endfor %}
+</ol>
