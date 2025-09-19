@@ -15,6 +15,8 @@ urlpatterns = [
     path('tour_list/', tour_list, name='tour_list'),
     path('tour_list/<int:id>/', tourist_detail, name='tourist_detail'),
     path('', include('basket.urls')),
+    path('', include('users.urls')),
+    path('captcha/', include('captcha.urls')),
 ]
 urlpatterns     += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns     += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
