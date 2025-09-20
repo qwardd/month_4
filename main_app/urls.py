@@ -2,8 +2,9 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from books.views import book_ru, book_en, book_us, book_detail, book_list
+from books.views import book_ru, book_en, book_us, book_detail, book_list, search_view
 from tours.views import tour_list, tourist_detail
+from clothes.views import all_clothes, child_clothes, teen_clothes, adult_clothes
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,6 +18,11 @@ urlpatterns = [
     path('', include('basket.urls')),
     path('', include('users.urls')),
     path('captcha/', include('captcha.urls')),
+    path('search/', search_view, name='search'),
+    path('all_clothes/', all_clothes, name='all_clothes'),
+    path('child_clothes/', child_clothes, name='child_clothes'),
+    path('teen_clothes/', teen_clothes, name='teen_clothes'),
+    path('adult_clothes/', adult_clothes, name='adult_clothes'),
 ]
 urlpatterns     += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns     += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

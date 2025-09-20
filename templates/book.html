@@ -1,3 +1,9 @@
+
+
+<form action="{% url 'search' %}" method="GET">
+    <input type="text" type="search" name="s" placeholder="Напишите название новости чтобы найти">
+    <button type="submit">Поиск</button>
+ </form> 
 <h1>Книги</h1>
 <ol>
   {% for i in book_list %}
@@ -11,3 +17,19 @@
 
   {% endfor %}
 </ol>
+
+<div style="display: flex; justify-content: center; margin: 20px 0;">
+  <div>
+    {% if book_list.has_previous %}
+      <a href="?page=1">« Первая</a>
+      <a href="?page={{ book_list.previous_page_number }}">‹ Предыдущая</a>
+    {% endif %}
+
+    <span>Страница {{ book_list.number }} из {{ book_list.paginator.num_pages }}</span>
+
+    {% if book_list.has_next %}
+      <a href="?page={{ book_list.next_page_number }}">Следующая ›</a>
+      <a href="?page={{ book_list.paginator.num_pages }}">Последняя »</a>
+    {% endif %}
+  </div>
+</div>

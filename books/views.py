@@ -2,6 +2,24 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from books.models import Books
+from django.core.paginator import Paginator
+
+def search_view(request):
+    query = request.GET.get('s', '')
+    book_list = Books.objects.filter(title__icontains=query) if query else Books.objects.none
+    context = {
+        'book_list': book_list,
+        's': query, 
+    }
+    return render(request, template_name='book.html', context=context)
+
+
+
+
+
+
+
+
 
 
 def book_detail(request, id):
@@ -17,8 +35,11 @@ def book_detail(request, id):
 def book_list(request):
     if request.method == 'GET':
         book_list = Books.objects.all().order_by('-id')
+        paginator = Paginator(book_list, 2)
+        page = request.GET.get('page')
+        page_obj = paginator.get_page(page)
         context = {
-            'book_list': book_list,
+            'book_list': page_obj,
         }
     return render(request, template_name='book.html', context=context)
 

@@ -1,0 +1,23 @@
+<h1>Вся одежда</h1>
+<a href="{% url 'child_clothes' %}">#Детскаяодежда</a>
+<br>
+<a href="{% url 'teen_clothes' %}">#Подростковаяодежда</a>
+<br>
+<a href="{% url 'adult_clothes' %}">#Взрослаяодежда</a>
+<ol>
+  {% for i in clothes %}
+  <li>
+    <h2>{{ i.title }}</h2>
+    <p>{{ i.created_at }}</p>
+      <p>
+        Теги:
+        {% for tag in i.tags.all %}
+          {{ tag.name }}{% if not forloop.last %}, {% endif %}
+        {% empty %}
+          без тегов
+        {% endfor %}
+      </p>
+  </li>
+
+  {% endfor %}
+</ol>
