@@ -5,36 +5,42 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from . import models, forms
+from django.views import generic 
 
-def register_view(request):
-    if request.method == 'POST':
+class RegisterView(generic.View):
+    def get(self, request):
+        form = forms.CustomRegisterForm()
+        return render(request, 'register.html',{'form': form})
+    
+    def post(self, request):
         form = forms.CustomRegisterForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('/login/')
-    else:
-        form = forms.CustomRegisterForm()
-    return render(request, "register.html", {'form': form})
+        return render(request, "register.html", {'form': form})
+
+class AuthLoginView(generic.View):
+     def get(self, request):
+        form = forms.LoginWithCaptchaForm()
+        return render(request, 'login.html', {'form':form})
+    
+     def post(self, request):
+         form = forms.LoginWithCaptchaForm(data=request.POST)
+         return render(request, 'login.html', {'form':form})
+         
+    
+class UserListView(LoginRequiredMixin, generic.ListView):
+    model = models.CustomerUser
+    template_name = 'user_list.html'
+    context_object_name = 'user_list'
 
 
-def auth_login_view(request):
-    if request.method == 'POST':
-        form = forms.LoginWithCaptchaForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('users:user_list')
-    else:
-        form = AuthenticationForm()
-    return render(request, 'login.html', {'form':form})
+
+class AuthLogoutView(generic.View):
+    def get(self, request):
+        logout(request)
+        return redirect('users:login')
 
 
-@login_required
-def user_list_view(request):
-    users = models.CustomerUser.objects.all()
-    return render(request, 'user_list.html', {'user_list':users})
 
-def auth_logout_view(request):
-    logout(request)
-    return redirect('users:login')
 
