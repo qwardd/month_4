@@ -1,0 +1,62 @@
+<form action="{% url 'cineboard:search' %}" method="GET">
+    <input type="search" name="s" placeholder="Напишите название Фильма чтобы найти" value="{{ request.GET.s }}">
+    <button type="submit">Поиск</button>
+</form>
+
+<br>
+<a href="{% url 'cineboard:horror_film' %}">#Хоррор</a>
+<br>
+<a href="{% url 'cineboard:roman_film' %}">#Романтика</a>
+<ol>
+{% for i in films %}
+  <li>
+    <h2>{{ i.title }}</h2>
+    <p>{{ i.created_at }}</p>
+    <p>
+      Теги:
+      {% for tag in i.tags.all %}
+        {{ tag.name }}{% if not forloop.last %}, {% endif %}
+      {% empty %}
+        без тегов
+      {% endfor %}
+    </p>
+  </li>
+{% empty %}
+  <li>Фильмов не найдено</li>
+{% endfor %}
+</ol>
+
+<h1>Фильмы</h1>
+<ol>
+  {% for i in tv_lst %}
+    <li>
+      <h2>{{ i.title }}</h2>
+      <p>{{ i.created_at }}</p>
+      <p>{{ i.description }}</p>
+
+      Теги:
+      {% for tag in i.tags.all %}
+        {{ tag.name }}{% if not forloop.last %}, {% endif %}
+      {% empty %}
+        без тегов
+      {% endfor %}<br>
+
+      <h2>Комменты</h2>
+      <ol>
+        {% for comment in i.rating.all %}
+          <li>
+            <p>Оценка: {{ comment.stars }}</p>
+            <p>{{ comment.text }}</p>
+          </li>
+        {% empty %}
+          <li>Нет комментариев</li>
+        {% endfor %}
+      </ol>
+
+      <a href="{% url 'cineboard:delete' i.id %}">Удалить фильм</a>
+      <a href="{% url 'cineboard:update' i.id %}">Изменить фильм</a>
+    </li>
+  {% empty %}
+    <li>Фильмов не найдено</li>
+  {% endfor %}
+</ol>

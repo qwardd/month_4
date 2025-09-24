@@ -1,0 +1,8 @@
+
+<h2>Удалить фильм "{{ object.title }}"?</h2>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Да, удалить</button>
+  <a href="{% url 'cineboard:all_films' %}">Отмена</a>
+</form>

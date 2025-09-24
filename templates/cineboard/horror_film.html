@@ -1,0 +1,19 @@
+<h1>#Хоррор</h1>
+<ol>
+{% for i in films %}
+  <li>
+    <h2>{{ i.title }}</h2>
+    <p>{{ i.created_at }}</p>
+    <p>
+      Теги:
+      {% for tag in i.tags.all %}
+        {{ tag.name }}{% if not forloop.last %}, {% endif %}
+      {% empty %}
+        без тегов
+      {% endfor %}
+    </p>
+  </li>
+{% empty %}
+  <li>Фильмов не найдено</li>
+{% endfor %}
+</ol>

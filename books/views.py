@@ -7,18 +7,6 @@ from  django.views import generic
 
 
 
-class SearchView(generic.ListView):
-    def get(self, request):
-        query = request.GET.get('s', '')
-        if query :
-            book_list = Books.objects.filter(title__icontains=query)
-        else:
-            book_list = Books.objects.none
-        context = {
-            'book_list': book_list,
-        }
-        return render(request, template_name='book.html', context=context)
-
 
 class BookDetailView(generic.DetailView):
     template_name = 'book_detail.html'
