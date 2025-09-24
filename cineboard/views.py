@@ -43,12 +43,15 @@ class AllFilmsListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'tv_lst'
     ordering = ['-id']
 
-#фильтр
+
 class HorrorFilmsView(generic.ListView):
     model = models.Films
     template_name = 'cineboard/horror_film.html'
     context_object_name = 'films'
-    ordering = ['-id']
+
+    def get_queryset(self):
+        return self.model.objects.filter(tags__name="#Хоррор").order_by('-id')
+
 
 
 class RomanFilmsView(generic.ListView):
@@ -56,6 +59,10 @@ class RomanFilmsView(generic.ListView):
     template_name = 'cineboard/roman_film.html'
     context_object_name = 'films'
     ordering = ['-id']
+
+    def get_queryset(self):
+        return self.model.objects.filter(tags__name="#Романтика").order_by('-id')
+    
    
 
 class AuthLogoutView(generic.View):
